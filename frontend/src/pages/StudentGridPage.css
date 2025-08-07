@@ -1,0 +1,74 @@
+.grid-container {
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #f1f7fc, #e9eff8);
+  min-height: 100vh;
+  color: #222;
+}
+
+.grid-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #00bcd4;
+  text-shadow: 0 0 4px rgba(0, 188, 212, 0.4);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+/* Card Styles */
+.student-card {
+  background: #ffffffcc;
+  padding: 1.5rem;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+  border: 3px solid transparent;
+  width: 100%;
+  max-width: 320px;
+  color: #333;
+  text-align: left;
+  transform: scale(1);
+}
+
+.student-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.student-card a {
+  color: #0097a7;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.student-card a:hover {
+  color: #9c27b0;
+  text-decoration: underline;
+}
+
+/* BMI status borders and glows */
+.bmi-under {
+  border-color: #ff9800;
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+}
+
+.bmi-normal {
+  border-color: #4caf50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+}
+
+.bmi-over {
+  border-color: #ffc107;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.4);
+}
+
+.bmi-obese {
+  border-color: #f44336;
+  box-shadow: 0 0 10px rgba(244, 67, 54, 0.4);
+}

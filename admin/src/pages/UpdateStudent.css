@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap');
+
+.update-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f9ff, #fff9f9);
+  font-family: 'Outfit', sans-serif;
+}
+
+.update-form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem 3rem;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 224, 255, 0.1);
+  border: 1px solid #d1f5ff;
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 450px;
+  animation: slideUp 0.7s ease-in-out;
+}
+
+.update-form h2 {
+  color: #00bcd4;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 2rem;
+  text-shadow: 0 0 6px rgba(0, 188, 212, 0.15);
+}
+
+.update-form input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: 1px solid #cbeaf0;
+  background: #f9f9f9;
+  color: #333;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.update-form input::placeholder {
+  color: #aaa;
+}
+
+.update-form input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #00bcd4;
+  box-shadow: 0 0 8px rgba(0, 188, 212, 0.3);
+}
+
+.update-form input:read-only {
+  background: #f1f1f1;
+  color: #999;
+  border-color: #ddd;
+}
+
+.update-form button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #00bcd4;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.update-form button:hover {
+  background-color: #00a2bb;
+  transform: scale(1.03);
+}
+
+/* Animation */
+@keyframes slideUp {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}

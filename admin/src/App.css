@@ -1,0 +1,17 @@
+/* src/App.css */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #121212;
+  color: white;
+}
+
+h1, h2 {
+  color: #00e0ff;
+  text-shadow: 0 0 5px #00e0ff;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

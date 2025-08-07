@@ -1,0 +1,52 @@
+/* Contact.css */
+
+.contact-section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f3f5f9, #e6f0ff); /* Light gradient */
+  padding: 2rem;
+}
+
+.contact-box {
+  background: rgba(255, 255, 255, 0.7); /* Light glass */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(14px);
+  padding: 2rem 3rem;
+  border-radius: 16px;
+  color: #333;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.contact-box:hover {
+  transform: translateY(-4px);
+}
+
+.contact-box h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #00bcd4;
+  text-shadow: 0 0 4px rgba(0, 188, 212, 0.2);
+}
+
+.contact-box p {
+  font-size: 1.05rem;
+  margin: 0.8rem 0;
+  color: #444;
+}
+
+.contact-box a {
+  color: #8e44ad;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.contact-box a:hover {
+  text-decoration: underline;
+  color: #00bcd4;
+}
