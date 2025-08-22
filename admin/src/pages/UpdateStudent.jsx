@@ -1,26 +1,40 @@
-// src/pages/UpdateStudent.jsx
-import { useState } from "react";
-import { updateStudent } from "../api/api";
+import { useState, useEffect } from "react";
+import { updateStudent, getBloodGroups } from "../api/api";
+import axios from "axios";
 import "./UpdateStudent.css";
 
 export default function UpdateStudent() {
   const [formData, setFormData] = useState({
     id: "",
     name: "",
-    bloodGroup: "",
+    bloodGroupId: "",
     height: "",
     weight: "",
     bmi: "",
+    email: "",
+    phone: "",
   });
 
+  const [bloodGroups, setBloodGroups] = useState([]);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    async function fetchBloodGroups() {
+      try {
+        const res = await getBloodGroups();
+        setBloodGroups(res.data);
+      } catch (err) {
+        console.error("Error fetching blood groups:", err);
+      }
+    }
+    fetchBloodGroups();
+  }, []);
 
   const calculateBMI = (height, weight) => {
     const h = parseFloat(height);
     const w = parseFloat(weight);
     if (!h || !w) return "";
-    const bmi = w / ((h / 100) * (h / 100));
-    return bmi.toFixed(2);
+    return (w / ((h / 100) * (h / 100))).toFixed(2);
   };
 
   const handleChange = (e) => {
@@ -33,38 +47,57 @@ export default function UpdateStudent() {
         name === "weight" ? value : formData.weight
       );
     }
-
     setFormData(updatedData);
   };
 
+  // ✅ Fetch student by ID
+      const fetchStudent = async (id) => {
+  if (!id) {
+    setMessage("❌ Please enter a Student ID.");
+    return;
+  }
+
+  try {
+    const res = await axios.get(`http://localhost:5000/api/students/${id}`);
+    setFormData({
+      id: res.data.id,
+      name: res.data.name || "",
+      bloodGroupId: res.data.blood_group_id || "",
+      height: res.data.height_cm || "",
+      weight: res.data.weight_kg || "",
+      bmi: res.data.bmi || "",
+      email: res.data.email || "",
+      phone: res.data.phone || "",
+    });
+    setMessage(""); // clear old error
+  } catch (err) {
+    console.error("Error fetching student:", err);
+    setMessage("❌ Student not found.");
+  }
+};
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { id, name, bloodGroupId, height, weight, email, phone } = formData;
 
-    const { id, name, bloodGroup, height, weight } = formData;
-
-    if (!height || !weight) {
-      setMessage("❌ Height and Weight are required.");
+    if (!id) {
+      setMessage("❌ Student ID is required.");
       return;
     }
 
-    try {
-      const res = await updateStudent(id, {
-        name,
-        blood_group: bloodGroup,
-        height_cm: parseFloat(height),
-        weight_kg: parseFloat(weight),
-      });
+    const updateData = {};
+    if (name) updateData.name = name;
+    if (bloodGroupId) updateData.blood_group_id = parseInt(bloodGroupId);
+    if (height) updateData.height_cm = parseFloat(height);
+    if (weight) updateData.weight_kg = parseFloat(weight);
+    if (email) updateData.email = email;
+    if (phone) updateData.phone = phone;
 
-      if (res.ok) {
+    try {
+      const res = await updateStudent(id, updateData);
+      if (res.status === 200) {
         setMessage("✅ Student updated successfully.");
-        setFormData({
-          id: "",
-          name: "",
-          bloodGroup: "",
-          height: "",
-          weight: "",
-          bmi: "",
-        });
       } else {
         setMessage("❌ Failed to update student.");
       }
@@ -75,10 +108,9 @@ export default function UpdateStudent() {
   };
 
   return (
-    <div className="update-container">
-      <form className="update-form" onSubmit={handleSubmit}>
-        <h2>🔄 Update Student</h2>
-
+    <div className="form-container">
+      <h2>🔄 Update Student</h2>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="id"
@@ -87,6 +119,7 @@ export default function UpdateStudent() {
           onChange={handleChange}
           required
         />
+        <button type="button" onClick={() => fetchStudent(formData.id)}>Fetch Details</button>
 
         <input
           type="text"
@@ -96,13 +129,18 @@ export default function UpdateStudent() {
           onChange={handleChange}
         />
 
-        <input
-          type="text"
-          name="bloodGroup"
-          placeholder="Blood Group"
-          value={formData.bloodGroup}
+        <select
+          name="bloodGroupId"
+          value={formData.bloodGroupId}
           onChange={handleChange}
-        />
+        >
+          <option value="">-- Select Blood Group --</option>
+          {bloodGroups.map((bg) => (
+            <option key={bg.id} value={bg.id}>
+              {bg.group_name}
+            </option>
+          ))}
+        </select>
 
         <input
           type="number"
@@ -110,7 +148,6 @@ export default function UpdateStudent() {
           placeholder="Height (cm)"
           value={formData.height}
           onChange={handleChange}
-          required
         />
 
         <input
@@ -119,7 +156,6 @@ export default function UpdateStudent() {
           placeholder="Weight (kg)"
           value={formData.weight}
           onChange={handleChange}
-          required
         />
 
         <input
@@ -130,9 +166,25 @@ export default function UpdateStudent() {
           readOnly
         />
 
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={formData.phone}
+          onChange={handleChange}
+        />
+
         <button type="submit">Update</button>
-        {message && <p className="update-message">{message}</p>}
       </form>
+      {message && <p className="message">{message}</p>}
     </div>
   );
 }

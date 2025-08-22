@@ -34,7 +34,8 @@ form {
   gap: 1rem;
 }
 
-input {
+input,
+select {
   padding: 1rem;
   border-radius: 10px;
   border: 1px solid #ccc;
@@ -42,17 +43,29 @@ input {
   color: #333;
   font-size: 1rem;
   transition: all 0.3s ease;
+  appearance: none; /* removes default arrow */
 }
 
 input::placeholder {
   color: #999;
 }
 
-input:focus {
+input:focus,
+select:focus {
   outline: none;
   background: #f0faff;
   border-color: #00bcd4;
   box-shadow: 0 0 10px rgba(0, 188, 212, 0.4);
+}
+
+/* Custom dropdown arrow */
+select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%2300bcd4' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 16px;
+  padding-right: 2.5rem;
+  cursor: pointer;
 }
 
 button {

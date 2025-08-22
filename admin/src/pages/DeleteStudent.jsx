@@ -12,7 +12,8 @@ export default function DeleteStudent() {
 
     try {
       const res = await deleteStudent(studentId);
-      if (res.ok) {
+
+      if (res.status === 200) {
         setMessage(`✅ Student with ID ${studentId} deleted successfully.`);
         setStudentId("");
       } else {
